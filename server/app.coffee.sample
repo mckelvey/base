@@ -1,0 +1,17 @@
+
+'use strict'
+
+http = require 'http'
+
+env = require __dirname + '/config/env'
+express = require __dirname + '/config/express'
+
+server = http.createServer(express)
+Db = require './services/db'
+### db = new Db() ###
+
+express.get '/api/',
+  (req, res) ->
+    res.send(404)
+
+server.listen(env.server.port)
