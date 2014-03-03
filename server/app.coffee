@@ -1,6 +1,7 @@
 
 'use strict'
 
+
 http = require 'http'
 fs = require 'fs'
 path = require 'path'
@@ -34,7 +35,7 @@ handlePage = (page, response) ->
         return handlePage "#{page}/index", response
       else
         return response.status(404).render('errors/404', { basedir: path.join(__dirname, 'views') })
-    response.render "pages/#{page}", { basedir: path.join(__dirname, 'views'), env: env.env }
+    response.render "pages/#{page}", { basedir: path.join(__dirname, 'views') }
 
 express.get pattern,
   (req, res) ->

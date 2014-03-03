@@ -1,0 +1,11 @@
+{
+  "undef": true,
+  "eqnull": true,
+  "expr": true,
+  "shadow": true,
+  "sub": true,
+  "multistr": true,
+  "boss": true,
+  "validthis": true,
+  "node": true
+}

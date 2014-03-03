@@ -13,7 +13,7 @@ head
   meta(name='description', content=description)
   meta(name='keywords', content=keywords)
   meta(name='author', content='David W. McKelvey')
-  link(rel='stylesheet', type='text/css', href='/styles/mosarcommercial.min.css')
+  link(rel='stylesheet', type='text/css', href='/styles/main.min.css')
   link(rel='shortcut icon', href='/favicon.ico')
   link(rel="apple-touch-icon", href="/images/icons/apple-touch-icon-precomposed.png")
   link(rel="apple-touch-icon", sizes="57x57", href="/images/icons/apple-touch-icon-57x57-precomposed.png")
@@ -23,7 +23,7 @@ head
   script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.js")
   script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-resource.js")
   script(src="/scripts/third-party/angular-file-upload.min.js")
-  script(src="/scripts/mosarcommercial.min.js")
+  script(src="/scripts/main.min.js")
   script.
     (function() {
       var config = {
@@ -64,7 +64,8 @@ body
   script.
     (window.jQuery)||document.write('<script src="/scripts/third-party/jquery.min.js"><\/script>');
   block scripts
-  script(src="//localhost:35729/livereload.js?snipver=1")
+  if typeof locals.env === 'string' && locals.env === 'dev' && typeof locals.liveReloadPort === 'number'
+    script(src="//localhost:#{locals.liveReloadPort}/livereload.js?snipver=1")
   <!--[if lt IE 10]>
   p.chromeframe Your browser is 
     em ancient!

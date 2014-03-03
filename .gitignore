@@ -11,8 +11,17 @@ pids
 logs
 results
 
+api/app.*
+env.*
+!*.sample
+
 npm-debug.log
 node_modules
 third-party
+
+build
+!build/**/.gitignore
+dist
+!dist/**/.gitignore
 
 .DS_Store

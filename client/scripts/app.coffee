@@ -1,0 +1,4 @@
+
+($) ->
+
+  anything = 'that'
