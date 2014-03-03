@@ -40,6 +40,11 @@ handlePage = (page, response) ->
 express.get pattern,
   (req, res) ->
     return res.redirect(301, req.url.replace(/\/+$/, '')) if req.url isnt '/' and req.url.substr(-1) is '/'
-    handlePage req.url.replace(/\/+$/, ''), res
+    staticHTML = path.join(env.server.staticPath, req.url, "index.html")
+    fs.lstat staticHTML, (err, stats) ->
+      if err?
+        handlePage req.url, res
+      else
+        res.sendfile staticHTML
 
 server.listen(env.server.port)

@@ -61,10 +61,18 @@
   };
 
   express.get(pattern, function(req, res) {
+    var staticHTML;
     if (req.url !== '/' && req.url.substr(-1) === '/') {
       return res.redirect(301, req.url.replace(/\/+$/, ''));
     }
-    return handlePage(req.url.replace(/\/+$/, ''), res);
+    staticHTML = path.join(env.server.staticPath, req.url, "index.html");
+    return fs.lstat(staticHTML, function(err, stats) {
+      if (err != null) {
+        return handlePage(req.url, res);
+      } else {
+        return res.sendfile(staticHTML);
+      }
+    });
   });
 
   server.listen(env.server.port);
