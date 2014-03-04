@@ -33,17 +33,32 @@ gulp.task('bower', function(){
   return bower();
 });
 
-gulp.task('clean-build', function() {
-  gulp.src('build/*.*', {read: false})
+gulp.task('clean-scripts', function() {
+  gulp.src('build/scripts/*.js', {read: false})
+    .pipe(clean());
+});
+
+gulp.task('clean-third-party', function() {
+  gulp.src('build/scripts/third-party/*.js', {read: false})
+    .pipe(clean());
+});
+
+gulp.task('clean-less', function() {
+  gulp.src('build/styles/*.css', {read: false})
+    .pipe(clean());
+});
+
+gulp.task('clean-templates', function() {
+  gulp.src('build/**/*.html', {read: false})
     .pipe(clean());
 });
 
 gulp.task('clean-dist', function() {
-  gulp.src('dist/*.*', {read: false})
+  gulp.src('dist', {read: false})
     .pipe(clean());
 });
 
-gulp.task('third-party-build', function() {
+gulp.task('third-party-build', ['clean-third-party'], function() {
   gulp.src(['third-party/*/dist/*.js'])
     .pipe(flatten())
     .pipe(gulp.dest('build/scripts/third-party'));
@@ -55,7 +70,7 @@ gulp.task('third-party-dist', function() {
     .pipe(gulp.dest('dist/scripts/third-party'));
 });
 
-gulp.task('scripts-build', function() {
+gulp.task('scripts-build', ['clean-scripts'], function() {
   gulp.src(['client/**/*.coffee'])
     .pipe(coffeelint())
     .pipe(coffeelint.reporter())
@@ -95,7 +110,7 @@ gulp.task('scripts-server', function() {
     .pipe(gulp.dest('server'));
 });
 
-gulp.task('less-build', function() {
+gulp.task('less-build', ['clean-less'], function() {
   gulp.src('client/less/*.less')
     .pipe(less())
     .pipe(concat('main.css'))
@@ -114,7 +129,7 @@ gulp.task('less-dist', function() {
     .pipe(gulp.dest('dist/styles'));
 });
 
-gulp.task('templates-build', function() {
+gulp.task('templates-build', ['clean-templates'], function() {
   gulp.src('server/views/pages/**/*.jade')
     .pipe(jade({
       basedir: BASEDIR,
@@ -146,11 +161,10 @@ gulp.task('watch', function() {
 
 gulp.task('server', [
   'scripts-server',
-  'clean-build',
   'third-party-build',
   'scripts-build',
-  'templates-build',
   'less-build',
+  'templates-build',
   'serve',
   'watch'
 ]);

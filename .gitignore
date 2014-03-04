@@ -20,8 +20,6 @@ node_modules
 third-party
 
 build
-!build/**/.gitignore
 dist
-!dist/**/.gitignore
 
 .DS_Store
