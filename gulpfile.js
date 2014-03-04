@@ -53,6 +53,11 @@ gulp.task('clean-templates', function() {
     .pipe(clean());
 });
 
+gulp.task('clean-server', function() {
+  gulp.src('server/**/*.js', {read: false})
+    .pipe(clean());
+});
+
 gulp.task('clean-dist', function() {
   gulp.src('dist', {read: false})
     .pipe(clean());

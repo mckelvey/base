@@ -11,9 +11,11 @@ pids
 logs
 results
 
-api/app.*
-env.*
-!*.sample
+server/**/*.js
+server/app.coffee
+!server/app.coffee.sample
+env.coffee
+!env.coffee.sample
 
 npm-debug.log
 node_modules
