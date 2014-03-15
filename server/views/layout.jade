@@ -5,72 +5,72 @@ block variables
 - var keywords = keywords || ""
 doctype html
 html(lang="en", ng-app="RECMS")
-head
-  meta(charset='utf-8')
-  meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
-  meta(name='viewport', content='width=device-width')
-  title #{title}
-  meta(name='description', content=description)
-  meta(name='keywords', content=keywords)
-  meta(name='author', content='David W. McKelvey')
-  link(rel='stylesheet', type='text/css', href='/styles/main.min.css')
-  link(rel='shortcut icon', href='/favicon.ico')
-  link(rel="apple-touch-icon", href="/images/icons/apple-touch-icon-precomposed.png")
-  link(rel="apple-touch-icon", sizes="57x57", href="/images/icons/apple-touch-icon-57x57-precomposed.png")
-  link(rel="apple-touch-icon", sizes="72x72", href="/images/icons/apple-touch-icon-72x72-precomposed.png")
-  link(rel="apple-touch-icon", sizes="114x114", href="/images/icons/apple-touch-icon-114x114-precomposed.png")
-  script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.js")
-  script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.js")
-  script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-resource.js")
-  script(src="/scripts/third-party/angular-file-upload.min.js")
-  script(src="/scripts/main.min.js")
-  script.
-    (function() {
-      var config = {
-        kitId: 'vjg2mlo',
-        scriptTimeout: 1000
-      };
-      var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
-    })();
-  script.
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-#######-#', 'domain.tld');
-      ga('send', 'pageview');
-  block head
-body
-  header.container
-    div.brand
-      a(href="/", title="Title [home]")
-        img(src="/images/logo.png", alt="Title [logo]")
-  block content
-  footer.container
-    div.vcard
-      p
-        a(class="fn org url", href="http://www.domain.tld") Title
-      address.adr
-        span(class="street-address") Street Address
-        span(class="locality") City
-        span(class="region") State
-        span(class="postal-code") Zip
-        abbr(class="country-name", title="United States of America") USA
-      p(class="email")
-        a(class="email", href="mailto:info@domain.tld") info@domain.tld
-      p(class="tel")
-        a(class="tel", href="tel:###-###-####") ###-###-####
-  script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
-  script.
-    (window.jQuery)||document.write('<script src="/scripts/third-party/jquery.min.js"><\/script>');
-  block scripts
-  if typeof locals.env === 'string' && locals.env === 'dev' && typeof locals.liveReloadPort === 'number'
-    script(src="//localhost:#{locals.liveReloadPort}/livereload.js?snipver=1")
-  <!--[if lt IE 10]>
-  p.chromeframe Your browser is 
-    em ancient!
-    a(href="http://browsehappy.com/") Upgrade to a different browser
-    | or 
-    a(href="http://www.google.com/chromeframe/?redirect=true") install Google Chrome Frame
-    | to experience this site.
-  <![endif]-->
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(name='viewport', content='width=device-width')
+    title #{title}
+    meta(name='description', content=description)
+    meta(name='keywords', content=keywords)
+    meta(name='author', content='David W. McKelvey')
+    link(rel='stylesheet', type='text/css', href='/styles/main.min.css')
+    link(rel='shortcut icon', href='/favicon.ico')
+    link(rel="apple-touch-icon", href="/images/icons/apple-touch-icon-precomposed.png")
+    link(rel="apple-touch-icon", sizes="57x57", href="/images/icons/apple-touch-icon-57x57-precomposed.png")
+    link(rel="apple-touch-icon", sizes="72x72", href="/images/icons/apple-touch-icon-72x72-precomposed.png")
+    link(rel="apple-touch-icon", sizes="114x114", href="/images/icons/apple-touch-icon-114x114-precomposed.png")
+    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.js")
+    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.js")
+    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-resource.js")
+    script(src="/scripts/third-party/angular-file-upload.min.js")
+    script(src="/scripts/main.min.js")
+    script.
+      (function() {
+        var config = {
+          kitId: 'TypeKit',
+          scriptTimeout: 3000
+        },
+        h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+      })(document);
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-#######-#', 'domain.tld');
+        ga('send', 'pageview');
+    block head
+  body
+    header.container
+      div.brand
+        a(href="/", title="Title [home]")
+          img(src="/images/logo.png", alt="Title [logo]")
+    block content
+    footer.container
+      div.vcard
+        p
+          a(class="fn org url", href="http://www.domain.tld") Title
+        address.adr
+          span(class="street-address") Street Address
+          span(class="locality") City
+          span(class="region") State
+          span(class="postal-code") Zip
+          abbr(class="country-name", title="United States of America") USA
+        p(class="email")
+          a(class="email", href="mailto:info@domain.tld") info@domain.tld
+        p(class="tel")
+          a(class="tel", href="tel:###-###-####") ###-###-####
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+    script.
+      (window.jQuery)||document.write('<script src="/scripts/third-party/jquery.min.js"><\/script>');
+    block scripts
+    if typeof locals.env === 'string' && locals.env === 'dev' && typeof locals.liveReloadPort === 'number'
+      script(src="//localhost:#{locals.liveReloadPort}/livereload.js?snipver=1")
+    <!--[if lt IE 10]>
+    p.chromeframe Your browser is 
+      em ancient!
+      a(href="http://browsehappy.com/") Upgrade to a different browser
+      | or 
+      a(href="http://www.google.com/chromeframe/?redirect=true") install Google Chrome Frame
+      | to experience this site.
+    <![endif]-->
