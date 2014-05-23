@@ -189,7 +189,7 @@ gulp.task('templates-dist', ['clean-templates-dist'], function() {
 });
 
 gulp.task('serve', function () {
-  nodemon({ script: 'server/app.js', ext: 'coffee' })
+  nodemon({ script: 'server/app.js', ext: 'coffee', watch: 'server' })
     .on('restart', ['scripts-server'])
   tinylr.listen(LIVERELOAD_PORT, function() {
     console.log('TinyLR Listening on %s', LIVERELOAD_PORT);
