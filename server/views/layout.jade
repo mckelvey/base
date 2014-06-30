@@ -13,7 +13,11 @@ html(lang="en", ng-app="RECMS")
     meta(name='description', content=description)
     meta(name='keywords', content=keywords)
     meta(name='author', content='David W. McKelvey')
-    link(rel='stylesheet', type='text/css', href='/styles/main.min.css')
+    - if (env == 'dev') {
+      link(rel='stylesheet', type='text/css', href='/styles/main.css?' + marker)
+    - } else {
+      link(rel='stylesheet', type='text/css', href='/styles/main.min.css?' + marker)
+    - }
     link(rel='shortcut icon', href='/favicon.ico')
     link(rel="apple-touch-icon", href="/images/icons/apple-touch-icon-precomposed.png")
     link(rel="apple-touch-icon", sizes="57x57", href="/images/icons/apple-touch-icon-57x57-precomposed.png")
@@ -63,6 +67,11 @@ html(lang="en", ng-app="RECMS")
     script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
     script.
       (window.jQuery)||document.write('<script src="/scripts/third-party/jquery.min.js"><\/script>');
+    - if (env == 'dev') {
+      script(src='/scripts/main.js?' + marker)
+    - } else {
+      script(src='/scripts/main.min.js?' + marker)
+    - }
     block scripts
     if typeof locals.env === 'string' && locals.env === 'dev' && typeof locals.liveReloadPort === 'number'
       script(src="//localhost:#{locals.liveReloadPort}/livereload.js?snipver=1")
