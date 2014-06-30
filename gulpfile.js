@@ -26,6 +26,7 @@ var tinylr = require('tiny-lr')();
 
 var LIVERELOAD_PORT = 35729;
 var BASEDIR = path.join(__dirname, 'server/views');
+var MARKER = (new Date()).getTime();
 var STATIC_PAGES_ROOT = __dirname + '/server/views/pages';
 var PAGE_WAIT = 2000;
 
@@ -174,7 +175,7 @@ gulp.task('templates-build', ['clean-templates-build'], function() {
   gulp.src('server/views/pages/**/*.jade')
     .pipe(jade({
       basedir: BASEDIR,
-      locals: { env: 'dev', liveReloadPort: LIVERELOAD_PORT }
+      locals: { env: 'dev', marker: MARKER, liveReloadPort: LIVERELOAD_PORT }
     }))
     .pipe(gulp.dest('build'))
 });
@@ -183,7 +184,7 @@ gulp.task('templates-dist', ['clean-templates-dist'], function() {
   gulp.src('server/views/pages/**/*.jade')
     .pipe(jade({
       basedir: BASEDIR,
-      locals: { env: 'pro' }
+      locals: { env: 'pro', marker: MARKER }
     }))
     .pipe(gulp.dest('dist'))
 });
