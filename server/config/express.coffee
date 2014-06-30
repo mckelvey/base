@@ -11,6 +11,10 @@ app.configure ->
   app.set 'views', __dirname + '/../views'
   app.set 'view engine', 'jade'
   app.set 'view options', { layout: false }
+  app.use (req, res, next) ->
+    if req.url.split('/').pop().match(/\.[a-z\d]+$/ig) is null
+      res.setHeader 'X-Frame-Options', "DENY"
+    next()
   app.use express.compress()
   app.use express.json()
   app.use express.urlencoded()
