@@ -35,47 +35,47 @@ gulp.task('bower', function(){
 });
 
 gulp.task('clean-scripts-build', function() {
-  gulp.src('build/scripts/*.*', {read: false})
+  return gulp.src('build/scripts/*.*', {read: false})
     .pipe(clean());
 });
 
 gulp.task('clean-scripts-dist', function() {
-  gulp.src('dist/scripts/*.*', {read: false})
+  return gulp.src('dist/scripts/*.*', {read: false})
     .pipe(clean());
 });
 
 gulp.task('clean-third-party-build', function() {
-  gulp.src('build/scripts/third-party/*.*', {read: false})
+  return gulp.src('build/scripts/third-party/*.*', {read: false})
     .pipe(clean());
 });
 
 gulp.task('clean-third-party-dist', function() {
-  gulp.src('dist/scripts/third-party/*.*', {read: false})
+  return gulp.src('dist/scripts/third-party/*.*', {read: false})
     .pipe(clean());
 });
 
 gulp.task('clean-less-build', function() {
-  gulp.src('build/styles/*.css', {read: false})
+  return gulp.src('build/styles/*.css', {read: false})
     .pipe(clean());
 });
 
 gulp.task('clean-less-dist', function() {
-  gulp.src('dist/styles/*.css', {read: false})
+  return gulp.src('dist/styles/*.css', {read: false})
     .pipe(clean());
 });
 
 gulp.task('clean-templates-build', function() {
-  gulp.src('build/**/*.html', {read: false})
+  return gulp.src('build/**/*.html', {read: false})
     .pipe(clean());
 });
 
 gulp.task('clean-templates-dist', function() {
-  gulp.src('dist/**/*.html', {read: false})
+  return gulp.src('dist/**/*.html', {read: false})
     .pipe(clean());
 });
 
 gulp.task('clean-server', function() {
-  gulp.src('server/**/*.js', {read: false})
+  return gulp.src('server/**/*.js', {read: false})
     .pipe(clean());
 });
 
@@ -114,7 +114,7 @@ gulp.task('third-party-dist', ['clean-third-party-dist'], function() {
 });
 
 gulp.task('scripts-build', ['clean-scripts-build'], function() {
-  gulp.src(['client/**/*.coffee'])
+  return gulp.src(['client/**/*.coffee'])
     .pipe(coffeelint())
     .pipe(coffeelint.reporter())
     .pipe(coffee())
@@ -143,7 +143,7 @@ gulp.task('scripts-dist', ['clean-scripts-dist'], function() {
 });
 
 gulp.task('scripts-server', function() {
-  gulp.src(['server/**/*.coffee'])
+  return gulp.src(['server/**/*.coffee'])
     .pipe(coffeelint())
     .pipe(coffeelint.reporter())
     .pipe(coffee())
@@ -154,7 +154,7 @@ gulp.task('scripts-server', function() {
 });
 
 gulp.task('less-build', ['clean-less-build'], function() {
-  gulp.src('client/less/*.less')
+  return gulp.src('client/less/*.less')
     .pipe(less())
     .pipe(concat('main.css'))
     .pipe(gulp.dest('build/styles'))
@@ -172,7 +172,7 @@ gulp.task('less-dist', ['clean-less-dist'], function() {
 });
 
 gulp.task('templates-build', ['clean-templates-build'], function() {
-  gulp.src('server/views/pages/**/*.jade')
+  return gulp.src('server/views/pages/**/*.jade')
     .pipe(jade({
       basedir: BASEDIR,
       locals: { env: 'dev', marker: MARKER, liveReloadPort: LIVERELOAD_PORT }
@@ -190,7 +190,11 @@ gulp.task('templates-dist', ['clean-templates-dist'], function() {
 });
 
 gulp.task('serve', function () {
-  nodemon({ script: 'server/app.js', ext: 'coffee', watch: 'server' })
+  nodemon({
+    script: 'server/app.js',
+    ext: 'coffee',
+    ignore: ['client/**/*.coffee']
+    })
     .on('restart', ['scripts-server'])
   tinylr.listen(LIVERELOAD_PORT, function() {
     console.log('TinyLR Listening on %s', LIVERELOAD_PORT);
