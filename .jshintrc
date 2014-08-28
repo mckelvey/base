@@ -7,5 +7,6 @@
   "multistr": true,
   "boss": true,
   "validthis": true,
-  "node": true
+  "node": true,
+  "newcap": false
 }

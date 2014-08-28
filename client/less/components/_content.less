@@ -1,0 +1,36 @@
+
+// Content
+// --------------------
+
+a[href$=".pdf"]:after {
+  content: " (PDF)";
+}
+
+#content {
+}
+
+#main {
+  h1, h2 {
+    .header-font();
+  }
+  
+  h3 {
+    margin: 1em 0 0.25em 0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  a {
+    &:hover {
+    }
+  }
+  
+  &> ul.list.list-no-bullets {
+    padding-left: 0;
+    list-style-type: none;
+    
+    li {
+      margin-bottom: 0.5em;
+    }
+  }
+}
