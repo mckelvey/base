@@ -6,7 +6,7 @@
     "gulp": "~3.8.7",
     "gulp-util": "~3.0.0",
     "gulp-todo": "~0.4.2",
-    "gulp-clean": "~0.2.4",
+    "gulp-rimraf": "~0.1.0",
     "gulp-flatten": "~0.0.2",
     "gulp-coffee": "~1.4.1",
     "gulp-coffeelint": "~0.3.1",
