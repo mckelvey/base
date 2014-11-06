@@ -13,7 +13,7 @@ html(lang="en")
     meta(name='description', content=description)
     meta(name='keywords', content=keywords)
     meta(name='author', content='David W. McKelvey')
-    - if (env == 'dev') {
+    - if (locals.env == 'dev') {
       link(rel='stylesheet', type='text/css', href='/styles/bootstrap.css')
       link(rel='stylesheet', type='text/css', href='/styles/main.css?' + marker)
       link(rel='stylesheet', type='text/css', href='/styles/print.css?' + marker, media="print")
@@ -65,7 +65,7 @@ html(lang="en")
             a(class="email", href="mailto:info@domain.tld") info@domain.tld
           p(class="tel")
             a(class="tel", href="tel:###-###-####") ###-###-####
-    - if (env == 'dev') {
+    - if (locals.env == 'dev') {
       script(src="/scripts/jquery.js")
       script(src="/scripts/lodash.js")
       script(src="/scripts/react.js")
@@ -87,5 +87,6 @@ html(lang="en")
       script(src='/scripts/main.min.js?' + marker)
     - }
     block scripts
-    if typeof locals.env === 'string' && locals.env === 'dev' && typeof locals.liveReloadPort === 'number'
+    - if (locals.env === 'dev' && typeof locals.liveReloadPort === 'number') {
       script(src="//localhost:#{locals.liveReloadPort}/livereload.js?snipver=1")
+    - }
