@@ -14,11 +14,9 @@ html(lang="en")
     meta(name='keywords', content=keywords)
     meta(name='author', content='David W. McKelvey')
     - if (locals.env == 'dev') {
-      link(rel='stylesheet', type='text/css', href='/styles/bootstrap.css')
       link(rel='stylesheet', type='text/css', href='/styles/main.css?' + marker)
       link(rel='stylesheet', type='text/css', href='/styles/print.css?' + marker, media="print")
     - } else {
-      link(rel='stylesheet', type='text/css', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css')
       link(rel='stylesheet', type='text/css', href='/styles/main.min.css?' + marker)
       link(rel='stylesheet', type='text/css', href='/styles/print.min.css?' + marker, media="print")
     - }
@@ -52,19 +50,22 @@ html(lang="en")
         <![endif]-->
         block content
       footer
-        div.vcard
+        .vcard.h-card
           p
-            a(class="fn org url", href="http://www.domain.tld") Title
-          address.adr
-            span(class="street-address") Street Address
-            span(class="locality") City
-            span(class="region") State
-            span(class="postal-code") Zip
-            abbr(class="country-name", title="United States of America") USA
-          p(class="email")
-            a(class="email", href="mailto:info@domain.tld") info@domain.tld
-          p(class="tel")
-            a(class="tel", href="tel:###-###-####") ###-###-####
+            a.fn.org.url.u-url.u-uid(href="http://www.domain.tld") Title
+          address.adr.p-adr.h-adr
+            span.street-address.p-street-address Street Address
+            span.locality.p-locality City
+            span.region.p-region State
+            span.postal-code.p-postal-code Zip
+            abbr.country-name.p-country-name(title="United States of America") USA
+          ul.contact
+            li.twitter
+              a.social.twitter(href="https://twitter.com/username", rel="me") @username
+            li.email
+              a.email.p-email(href="mailto:hello@domain.tld") hello@domain.tld
+            li.tel
+              a.tel.p-tel(href="tel:###-###-####") ###-###-####
     - if (locals.env == 'dev') {
       script(src="/scripts/jquery.js")
       script(src="/scripts/lodash.js")

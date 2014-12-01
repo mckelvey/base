@@ -5,6 +5,8 @@ var gulp = require('gulp');
 
 var gutil = require('gulp-util');
 var todo = require('gulp-todo');
+var removeLines = require('gulp-remove-lines');
+var replace = require('gulp-replace');
 
 var bower = require('gulp-bower');
 var clean = require('gulp-rimraf');
@@ -19,6 +21,7 @@ var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 
 var less = require('gulp-less');
+var uncss = require('gulp-uncss');
 var minifyCSS = require('gulp-minify-css');
 
 var jade = require('gulp-jade');
@@ -117,6 +120,7 @@ gulp.task('scripts-dist', ['clean-scripts-dist'], function() {
     .pipe(gulp.dest('dist/scripts'));
   var CJSX = gulp.src('client/scripts/components/**/*.cjsx')
     .pipe(cjsx({bare: true}).on('error', gutil.log))
+    // .pipe(replace(/\/images\//g, '/dist/images/'))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
@@ -127,6 +131,7 @@ gulp.task('scripts-dist', ['clean-scripts-dist'], function() {
     .pipe(coffeelint())
     .pipe(coffeelint.reporter())
     .pipe(coffee())
+    // .pipe(replace(/\/images\//g, '/dist/images/'))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
@@ -147,33 +152,33 @@ gulp.task('scripts-server', function() {
     .pipe(gulp.dest('server'));
 });
 
+gulp.task('bootstrap-styles', ['templates-build'], function() {
+  return gulp.src('third-party/bootstrap/dist/css/bootstrap.css')
+    .pipe(uncss({
+      html: ['build/index.html'],
+      ignore: ['hover', 'focus', 'active']
+    }))
+    .pipe(removeLines({'filters': [/sourceMappingURL/]}))
+    .pipe(gulp.dest('client/css'))
+});
+
 gulp.task('styles-build', ['clean-styles-build'], function() {
-  var thirdParty = gulp.src([
-    'third-party/bootstrap/dist/css/bootstrap.css',
-    'third-party/bootstrap/dist/css/bootstrap.css.map'
-    ])
-    .pipe(gulp.dest('build/styles'));
-  var styles = gulp.src('client/less/*.less')
+  return gulp.src(['client/less/*.less'])
     .pipe(less())
     .pipe(gulp.dest('build/styles'))
     .pipe(rename({ extname: '.min.css' }))
     .pipe(minifyCSS({ removeEmpty: true }))
     .pipe(gulp.dest('build/styles'))
     .pipe(livereload(tinylr));
-  return (thirdParty && styles);
 });
 
-gulp.task('styles-dist', ['clean-styles-dist'], function() {
-  var thirdParty = gulp.src([
-    'third-party/bootstrap/dist/css/bootstrap.min.css'
-    ])
-    .pipe(gulp.dest('dist/styles'));
-  var styles = gulp.src('client/less/*.less')
+gulp.task('styles-dist', ['clean-styles-dist', 'templates-dist'], function() {
+  return gulp.src('client/less/*.less')
     .pipe(less())
+    // .pipe(replace(/\/images\//g, '/dist/images/'))
     .pipe(rename({ extname: '.min.css' }))
     .pipe(minifyCSS({ removeEmpty: true }))
     .pipe(gulp.dest('dist/styles'));
-  return (thirdParty && styles);
 });
 
 gulp.task('templates-build', function() {
@@ -191,6 +196,7 @@ gulp.task('templates-dist', ['clean-templates-dist'], function() {
       basedir: BASEDIR,
       locals: { env: 'pro', marker: (new Date()).getTime() }
     }))
+    // .pipe(replace(/\/images\//g, '/dist/images/'))
     .pipe(gulp.dest('dist'))
 });
 
@@ -243,6 +249,7 @@ gulp.task('todo', ['scripts-server', 'templates-build', 'scripts-build'], functi
 });
 
 gulp.task('server', [
+  'bootstrap-styles',
   'scripts-server',
   'scripts-build',
   'styles-build',
@@ -254,6 +261,7 @@ gulp.task('server', [
 ]);
 
 gulp.task('dist', [
+  'bootstrap-styles',
   'scripts-server',
   'scripts-dist',
   'styles-dist',

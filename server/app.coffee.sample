@@ -9,8 +9,6 @@ env = require __dirname + '/config/env'
 express = require __dirname + '/config/express'
 
 server = http.createServer(express)
-Db = require __dirname + '/services/db'
-### db = new Db() ###
 
 ### API Responses ###
 
