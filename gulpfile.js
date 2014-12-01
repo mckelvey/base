@@ -7,9 +7,10 @@ var gutil = require('gulp-util');
 var todo = require('gulp-todo');
 var removeLines = require('gulp-remove-lines');
 var replace = require('gulp-replace');
+var vinylPaths = require('vinyl-paths');
+var del = require('del');
 
 var bower = require('gulp-bower');
-var clean = require('gulp-rimraf');
 var concat = require('gulp-concat');
 var rename = require("gulp-rename");
 var flatten = require("gulp-flatten");
@@ -36,37 +37,37 @@ var BASEDIR = path.join(__dirname, 'server/views');
 
 gulp.task('clean-scripts-build', function() {
   return gulp.src('build/scripts/*.*', {read: false})
-    .pipe(clean());
+    .pipe(vinylPaths(del));
 });
 
 gulp.task('clean-scripts-dist', function() {
   return gulp.src('dist/scripts/*.*', {read: false})
-    .pipe(clean());
+    .pipe(vinylPaths(del));
 });
 
 gulp.task('clean-styles-build', function() {
   return gulp.src('build/styles/*.*', {read: false})
-    .pipe(clean());
+    .pipe(vinylPaths(del));
 });
 
 gulp.task('clean-styles-dist', function() {
   return gulp.src('dist/styles/*.*', {read: false})
-    .pipe(clean());
+    .pipe(vinylPaths(del));
 });
 
 gulp.task('clean-templates-build', function() {
   return gulp.src('build/**/*.html', {read: false})
-    .pipe(clean());
+    .pipe(vinylPaths(del));
 });
 
 gulp.task('clean-templates-dist', function() {
   return gulp.src('dist/**/*.html', {read: false})
-    .pipe(clean());
+    .pipe(vinylPaths(del));
 });
 
 gulp.task('clean-server', function() {
   return gulp.src('server/**/*.js', {read: false})
-    .pipe(clean());
+    .pipe(vinylPaths(del));
 });
 
 gulp.task('copy-to-build', function() {
