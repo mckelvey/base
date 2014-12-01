@@ -91,6 +91,7 @@ gulp.task('scripts-build', ['clean-scripts-build'], function() {
     .pipe(gulp.dest('build/scripts'));
   var CJSX = gulp.src('client/scripts/components/**/*.cjsx')
     .pipe(cjsx({bare: true}).on('error', gutil.log))
+    .on('error', function(err){ console.log(err.message); })
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
@@ -101,6 +102,7 @@ gulp.task('scripts-build', ['clean-scripts-build'], function() {
     .pipe(coffeelint())
     .pipe(coffeelint.reporter())
     .pipe(coffee())
+    .on('error', function(err){ console.log(err.message); })
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
@@ -166,6 +168,7 @@ gulp.task('bootstrap-styles', ['templates-build'], function() {
 gulp.task('styles-build', ['clean-styles-build'], function() {
   return gulp.src(['client/less/*.less'])
     .pipe(less())
+    .on('error', function(err){ console.log(err.message); })
     .pipe(gulp.dest('build/styles'))
     .pipe(rename({ extname: '.min.css' }))
     .pipe(minifyCSS({ removeEmpty: true }))
@@ -188,6 +191,7 @@ gulp.task('templates-build', function() {
       basedir: BASEDIR,
       locals: { env: 'dev', marker: (new Date()).getTime(), liveReloadPort: LIVERELOAD_PORT }
     }))
+    .on('error', function(err){ console.log(err.message); })
     .pipe(gulp.dest('build'))
 });
 
