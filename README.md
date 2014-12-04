@@ -3,11 +3,11 @@ base
 
 Base is my basic setup for either a static site or a small node+express site
 and includes all the development goodies I use most frequently. At present,
-this is bootstrap, React, jQuery and lodash.
+this is Bootstrap, React, jQuery and lodash.
 
 To adapt the setup to the particular need, I typically just delete the items
 needed. For instance, if I don’t need the bootstrap js, then I can often also
-delete jQuery and I‘ll show that adaptation in the guide below.
+delete jQuery and I’ll show that adaptation in the guide below.
 
 ## Installation
 
@@ -39,7 +39,7 @@ you haven’t already.)
 `$ git remote set-url origin git@github.com:mckelvey/[your-new-repo-name].git`
 
 3. If you want to continue to receive upstream changes to base, add it as an
-upstream source. (See upstream updates below.)
+upstream source. [(See upstream updates below.)](#upstream-updates)
 
 `$ git remote add upstream git@github.com:mckelvey/base.git`
 
@@ -126,7 +126,7 @@ eventual URL and provides for maximum flexibility in future content changes.
 
 A home page is already present as an example. Per Jade style, the page is composed
 of a layout “definition” plus several corresponding blocks. (A block is a piece of
-content the is inserted into the layout at the designated location.)
+content that is injected into the layout at the designated location.)
 
 To change the layout, change the path of the extends reference atop the page.
 After that, you need only make sure that you have matching block names between the
@@ -191,14 +191,17 @@ files (without changes) to trigger a complete cycle.
 
 3. The browser must be reloaded once the development server is up and running
 to get the livereload connection refreshed. And, this is also sometimes true
-if an error ends the gulp server task, depending on how long it goes.
+if an error ends the gulp server task, depending on how long it goes as a dead
+connection for the browser.
 
 4. Uncss runs on the bootstrap css file to remove any unneeded css. However,
-uncss needs reference html files upon which it judges what’s actually being 
+uncss needs reference html files upon which to judge what css is actually being 
 used. In the gulpfile.js, after the initial library requirements, you’ll need
 to manually add the paths to your static files. If your site is too dynamic
 or uses javascript HTML generation, you may simply opt to drop uncss from the
-process.
+process as it becomes too cumbersome for the benefit.
+
+#### Todos
 
 The only other development task is a utility. If you leave yourself todos,
 you can use the todo task to collect them into a TODO.md file.
@@ -233,3 +236,7 @@ source, you need only complete the following steps in your local repo.
 As with any merge, depending on the changes you’ve made, you may need to resolve
 conflicts and should be sure to vet the function you desire. You can always
 review changes in this repo prior to an upstream fetch/merge.
+
+## Contributions
+
+Suggestions and contributions are welcome. Create an issue or [email me](mailto:david@mckelveycreative.com)!
