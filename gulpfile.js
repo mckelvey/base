@@ -37,7 +37,7 @@ var BASEDIR = path.join(__dirname, 'server/views');
 var REFERENCE_HTML = [
   'build/index.html'
 ];
-var DIST_PATH = '';
+var DIST_PREFIX_PATH = '';
 
 gulp.task('clean-scripts-build', function() {
   return gulp.src('build/scripts/*.*', {read: false})
@@ -99,9 +99,10 @@ gulp.task('scripts-build', ['clean-scripts-build'], function() {
     ])
     .pipe(flatten())
     .pipe(gulp.dest('build/scripts'));
-  var CJSX = gulp.src('client/scripts/components/**/*.cjsx')
+  var CJSX = gulp.src('client/coffee/components/**/*.cjsx')
     .pipe(cjsx({bare: true}).on('error', gutil.log))
     .on('error', function(err){ console.log(err.message); })
+    .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
@@ -113,6 +114,7 @@ gulp.task('scripts-build', ['clean-scripts-build'], function() {
     .pipe(coffeelint.reporter())
     .pipe(coffee())
     .on('error', function(err){ console.log(err.message); })
+    .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
@@ -131,9 +133,10 @@ gulp.task('scripts-dist', ['clean-scripts-dist'], function() {
     ])
     .pipe(flatten())
     .pipe(gulp.dest('dist/scripts'));
-  var CJSX = gulp.src('client/scripts/components/**/*.cjsx')
+  var CJSX = gulp.src('client/coffee/components/**/*.cjsx')
     .pipe(cjsx({bare: true}).on('error', gutil.log))
-    .pipe(replace(/\/images\//g, DIST_PATH + '/images/'))
+    .pipe(replace(/\/images\//g, DIST_PREFIX_PATH + '/images/'))
+    .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
@@ -144,7 +147,8 @@ gulp.task('scripts-dist', ['clean-scripts-dist'], function() {
     .pipe(coffeelint())
     .pipe(coffeelint.reporter())
     .pipe(coffee())
-    .pipe(replace(/\/images\//g, DIST_PATH + '/images/'))
+    .pipe(replace(/\/images\//g, DIST_PREFIX_PATH + '/images/'))
+    .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
@@ -179,6 +183,7 @@ gulp.task('styles-build', ['clean-styles-build'], function() {
   return gulp.src(['client/less/*.less'])
     .pipe(less())
     .on('error', function(err){ console.log(err.message); })
+    .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
     .pipe(gulp.dest('build/styles'))
     .pipe(rename({ extname: '.min.css' }))
     .pipe(minifyCSS({ removeEmpty: true }))
@@ -189,7 +194,8 @@ gulp.task('styles-build', ['clean-styles-build'], function() {
 gulp.task('styles-dist', ['clean-styles-dist', 'templates-dist'], function() {
   return gulp.src('client/less/*.less')
     .pipe(less())
-    .pipe(replace(/\/images\//g, DIST_PATH + '/images/'))
+    .pipe(replace(/\/images\//g, DIST_PREFIX_PATH + '/images/'))
+    .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
     .pipe(rename({ extname: '.min.css' }))
     .pipe(minifyCSS({ removeEmpty: true }))
     .pipe(gulp.dest('dist/styles'));
@@ -202,6 +208,7 @@ gulp.task('templates-build', function() {
       locals: { env: 'dev', marker: (new Date()).getTime(), liveReloadPort: LIVERELOAD_PORT }
     }))
     .on('error', function(err){ console.log(err.message); })
+    .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
     .pipe(gulp.dest('build'))
 });
 
@@ -209,13 +216,14 @@ gulp.task('templates-dist', ['clean-templates-dist'], function() {
   gulp.src('server/views/pages/**/*.jade')
     .pipe(jade({
       basedir: BASEDIR,
-      locals: { env: 'pro', marker: (new Date()).getTime() }
+      locals: { env: 'pro', marker: (new Date()).getTime(), prefixPath: DIST_PREFIX_PATH }
     }))
-    .pipe(replace(/\/images\//g, DIST_PATH + '/images/'))
+    .pipe(replace(/\/images\//g, DIST_PREFIX_PATH + '/images/'))
+    .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
     .pipe(gulp.dest('dist'))
 });
 
-gulp.task('serve', function () {
+gulp.task('serve', ['scripts-server'], function () {
   nodemon({
     watch: ['server/'],
     script: 'server/app.js',
@@ -234,7 +242,7 @@ gulp.task('watch', function() {
   gulp.watch(['client/**/*.*', '!client/**/*.{coffee,cjsx,less,html,map}'], ['copy-to-build']).on('change', function(file) {
     tinylr.changed(file.path);
   });
-  gulp.watch(['client/scripts/**/*.coffee', 'client/scripts/components/**/*.cjsx'], ['scripts-build']).on('change', function(file) {
+  gulp.watch(['client/coffee/**/*.coffee', 'client/coffee/components/**/*.cjsx'], ['scripts-build']).on('change', function(file) {
     tinylr.changed(file.path);
   });
   gulp.watch('client/less/**/*.less', ['styles-build']).on('change', function(file) {
