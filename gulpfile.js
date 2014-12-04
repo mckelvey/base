@@ -34,6 +34,10 @@ var tinylr = require('tiny-lr')();
 
 var LIVERELOAD_PORT = 35729;
 var BASEDIR = path.join(__dirname, 'server/views');
+var REFERENCE_HTML = [
+  'build/index.html'
+];
+var DIST_PATH = '';
 
 gulp.task('clean-scripts-build', function() {
   return gulp.src('build/scripts/*.*', {read: false})
@@ -65,14 +69,20 @@ gulp.task('clean-templates-dist', function() {
     .pipe(vinylPaths(del));
 });
 
+gulp.task('clean-build', function() {
+  return gulp.src(['build/**/*.*', '!build/**/*.{js,css,html,map}'], {read: false})
+    .pipe(vinylPaths(del));
+});
+
 gulp.task('clean-server', function() {
   return gulp.src('server/**/*.js', {read: false})
     .pipe(vinylPaths(del));
 });
 
-gulp.task('copy-to-build', function() {
-  gulp.src(['client/**/*.*', '!client/**/*.{coffee,cjsx,less}'])
-    .pipe(gulp.dest('build'));
+gulp.task('copy-to-build', ['clean-build'], function() {
+  return gulp.src(['client/**/*.*', '!client/**/*.{coffee,cjsx,less,html,map}'])
+    .pipe(gulp.dest('build'))
+    .pipe(livereload(tinylr));
 });
 
 gulp.task('copy-to-dist', function() {
@@ -123,7 +133,7 @@ gulp.task('scripts-dist', ['clean-scripts-dist'], function() {
     .pipe(gulp.dest('dist/scripts'));
   var CJSX = gulp.src('client/scripts/components/**/*.cjsx')
     .pipe(cjsx({bare: true}).on('error', gutil.log))
-    // .pipe(replace(/\/images\//g, '/dist/images/'))
+    .pipe(replace(/\/images\//g, DIST_PATH + '/images/'))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
@@ -134,7 +144,7 @@ gulp.task('scripts-dist', ['clean-scripts-dist'], function() {
     .pipe(coffeelint())
     .pipe(coffeelint.reporter())
     .pipe(coffee())
-    // .pipe(replace(/\/images\//g, '/dist/images/'))
+    .pipe(replace(/\/images\//g, DIST_PATH + '/images/'))
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
@@ -158,7 +168,7 @@ gulp.task('scripts-server', function() {
 gulp.task('bootstrap-styles', ['templates-build'], function() {
   return gulp.src('third-party/bootstrap/dist/css/bootstrap.css')
     .pipe(uncss({
-      html: ['build/index.html'],
+      html: REFERENCE_HTML,
       ignore: ['hover', 'focus', 'active']
     }))
     .pipe(removeLines({'filters': [/sourceMappingURL/]}))
@@ -179,7 +189,7 @@ gulp.task('styles-build', ['clean-styles-build'], function() {
 gulp.task('styles-dist', ['clean-styles-dist', 'templates-dist'], function() {
   return gulp.src('client/less/*.less')
     .pipe(less())
-    // .pipe(replace(/\/images\//g, '/dist/images/'))
+    .pipe(replace(/\/images\//g, DIST_PATH + '/images/'))
     .pipe(rename({ extname: '.min.css' }))
     .pipe(minifyCSS({ removeEmpty: true }))
     .pipe(gulp.dest('dist/styles'));
@@ -201,7 +211,7 @@ gulp.task('templates-dist', ['clean-templates-dist'], function() {
       basedir: BASEDIR,
       locals: { env: 'pro', marker: (new Date()).getTime() }
     }))
-    // .pipe(replace(/\/images\//g, '/dist/images/'))
+    .pipe(replace(/\/images\//g, DIST_PATH + '/images/'))
     .pipe(gulp.dest('dist'))
 });
 
@@ -221,6 +231,9 @@ gulp.task('serve', function () {
 });
 
 gulp.task('watch', function() {
+  gulp.watch(['client/**/*.*', '!client/**/*.{coffee,cjsx,less,html,map}'], ['copy-to-build']).on('change', function(file) {
+    tinylr.changed(file.path);
+  });
   gulp.watch(['client/scripts/**/*.coffee', 'client/scripts/components/**/*.cjsx'], ['scripts-build']).on('change', function(file) {
     tinylr.changed(file.path);
   });
