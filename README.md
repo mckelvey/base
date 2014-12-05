@@ -21,6 +21,10 @@ Install the latest version of stable node and npm from the [nodejs website]
 (http://nodejs.org/). (Stable versions are even numbered, e.g. `0.10` rather
 than `0.11`.) There are binaries or you can install from source, whatever you like.
 
+In order to use uncss (which includes PhantomJS) on a Ubuntu (and any *nix probably)
+system, you’ll need to install libfreetype6 and fontconfig via your matching
+package management system. Otherwise, you shouldn’t need these additional libs.
+
 ### Cloning Base
 
 The following assumes you’ll be using a git repo for your final code, storing
