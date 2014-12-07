@@ -99,7 +99,7 @@ gulp.task('scripts-build', ['clean-scripts-build'], function() {
     ])
     .pipe(flatten())
     .pipe(gulp.dest('build/scripts'));
-  var CJSX = gulp.src('client/coffee/components/**/*.cjsx')
+  var CJSX = gulp.src('client/coffee/**/*.cjsx')
     .pipe(cjsx({bare: true}).on('error', gutil.log))
     .on('error', function(err){ console.log(err.message); })
     .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
@@ -133,7 +133,7 @@ gulp.task('scripts-dist', ['clean-scripts-dist'], function() {
     ])
     .pipe(flatten())
     .pipe(gulp.dest('dist/scripts'));
-  var CJSX = gulp.src('client/coffee/components/**/*.cjsx')
+  var CJSX = gulp.src('client/coffee/**/*.cjsx')
     .pipe(cjsx({bare: true}).on('error', gutil.log))
     .pipe(replace(/\/images\//g, DIST_PREFIX_PATH + '/images/'))
     .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
@@ -242,7 +242,7 @@ gulp.task('watch', function() {
   gulp.watch(['client/**/*.*', '!client/**/*.{coffee,cjsx,less,html,map}'], ['copy-to-build']).on('change', function(file) {
     tinylr.changed(file.path);
   });
-  gulp.watch(['client/coffee/**/*.coffee', 'client/coffee/components/**/*.cjsx'], ['scripts-build']).on('change', function(file) {
+  gulp.watch(['client/coffee/**/*.coffee', 'client/coffee/**/*.cjsx'], ['scripts-build']).on('change', function(file) {
     tinylr.changed(file.path);
   });
   gulp.watch('client/less/**/*.less', ['styles-build']).on('change', function(file) {
