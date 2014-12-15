@@ -210,6 +210,7 @@ gulp.task('templates-build', function() {
     .on('error', function(err){ console.log(err.message); })
     .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
     .pipe(gulp.dest('build'))
+    .pipe(livereload(tinylr));
 });
 
 gulp.task('templates-dist', ['clean-templates-dist'], function() {
@@ -220,7 +221,7 @@ gulp.task('templates-dist', ['clean-templates-dist'], function() {
     }))
     .pipe(replace(/\/images\//g, DIST_PREFIX_PATH + '/images/'))
     .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('serve', ['scripts-server'], function () {
@@ -248,12 +249,8 @@ gulp.task('watch', function() {
   gulp.watch('client/less/**/*.less', ['styles-build']).on('change', function(file) {
     tinylr.changed(file.path);
   });
-  gulp.watch('server/views/**/*.jade', ['templates-build']);
-  gulp.watch('build/**/*.html').on('change', function(file) {
-    if (file.type != 'changed') {
-      return null;
-    } 
-    tinylr.changed({ body: { files: ['index.html'] } });
+  gulp.watch('client/less/**/*.jade', ['templates-build']).on('change', function(file) {
+    tinylr.changed(file.path);
   });
 });
 
