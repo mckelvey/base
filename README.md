@@ -214,19 +214,26 @@ you can use the todo task to collect them into a TODO.md file.
 
 ### Static/Production
 
-To output final files for production, issue the following command:
+To output final files for production, issue one of the following commands:
 
 `$ gulp dist`
 
-This composes all the files in /client as with development, but adds additional
+`$ gulp live`
+
+Both compose all the files in /client as with development, but adds additional
 minification, etc. for final output (and skips the server of course). All final
-files will be written to the /dist folder.
+files will be written to the /dist or /live folders, respectively.
 
 Should you plan to use the /dist folder as a static site, you may need to have
 it (and all the paths) be at a different location/path. If you wish, you can add
 to the default path, e.g. /images becomes [/prefixed-path]/images via the
-same-named variable in the gulpfile after the required libraries. This path is
-also output in the default layout prefixed to styles and scripts.
+DIST_PREFIX_PATH variable in the gulpfile after the required libraries. This
+path is also output in the default layout prefixed to styles and scripts.
+
+The difference between /dist and /live is the use of a DIST_PREFIX_PATH. If you
+are using the /dist folder as a sharable preview (for instance) then you’ll want
+a non-prefixed version for the final site. This is the live version— dist without
+any prefixing.
 
 ## Upstream Updates
 
