@@ -11,6 +11,8 @@ pids
 logs
 results
 
+client/css
+
 server/**/*.js
 server/app.coffee
 !server/app.coffee.sample
@@ -23,5 +25,6 @@ third-party
 
 build
 dist
+live
 
 .DS_Store
