@@ -267,7 +267,7 @@ gulp.task('watch', function() {
   gulp.watch('client/less/**/*.less', ['styles-build']).on('change', function(file) {
     tinylr.changed(file.path);
   });
-  gulp.watch('client/less/**/*.jade', ['templates-build']).on('change', function(file) {
+  gulp.watch('server/views/**/*.jade', ['templates-build']).on('change', function(file) {
     tinylr.changed(file.path);
   });
 });
