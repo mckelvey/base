@@ -74,16 +74,16 @@ html(lang="en")
       script(src='/scripts/react-components.js?' + marker)
       script(src='/scripts/main.js?' + marker)
     - } else {
-      script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+      script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
       script.
         (window.jQuery)||document.write('<script src="#{locals.prefixPath}/scripts/jquery.min.js"><\/script>');
-      script(src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js")
+      script(src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.3.1/lodash.min.js")
       script.
-        (window._)||document.write('<script src="/#{locals.prefixPath}scripts/lodash.min.js"><\/script>');
-      script(src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.1/react.min.js")
+        (window._)||document.write('<script src="/#{locals.prefixPath}/scripts/lodash.min.js"><\/script>');
+      script(src="//cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.min.js")
       script.
         (window.React)||document.write('<script src="#{locals.prefixPath}/scripts/react.min.js"><\/script>');
-      script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js")
+      script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js")
       script(src='#{locals.prefixPath}/scripts/react-components.min.js?' + marker)
       script(src='#{locals.prefixPath}/scripts/main.min.js?' + marker)
     - }

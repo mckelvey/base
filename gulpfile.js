@@ -43,11 +43,24 @@ var UNCSS_KEEP_STYLES = [
   /dropdown/i
 ];
 var DIST_PREFIX_PATH = '';
+var THIRD_PARTY_SCRIPTS = [
+  'third-party/jquery/dist/jquery.js',
+  'third-party/lodash/dist/lodash.js',
+  'third-party/react/react.js',
+  'third-party/bootstrap/dist/js/bootstrap.js'
+];
+var THIRD_PARTY_SCRIPTS_MINIFIED = [
+  'third-party/jquery/dist/jquery.min.js',
+  'third-party/lodash/dist/lodash.min.js',
+  'third-party/react/react.min.js',
+  'third-party/bootstrap/dist/js/bootstrap.min.js'
+];
 
 var defaultOptions = function(options) {
   if (typeof options === 'undefined') { options = {}; }
   if (typeof options.copyPaths === 'undefined') { options.copyPaths = ['client/**/*.*', '!client/**/*.{coffee,cjsx,less,css,map,html}']; }
   if (typeof options.prefix != 'string') { options.prefix = ''; }
+  if (typeof options.minified != 'boolean') { options.minified = false; }
   if (typeof options.watch != 'boolean') { options.watch = false; }
   return options;
 }
@@ -64,15 +77,17 @@ var copy = function(destinationPath, options){
     .pipe(options.watch === true ? livereload(tinylr) : gutil.noop());
 };
 
-var thirdPartyScripts = function(destinationPath) {
-  return gulp.src([
-    'third-party/jquery/dist/jquery.js',
-    'third-party/lodash/dist/lodash.js',
-    'third-party/react/react.js',
-    'third-party/bootstrap/dist/js/bootstrap.js'
-    ])
-    .pipe(flatten())
-    .pipe(gulp.dest(destinationPath));
+var thirdPartyScripts = function(destinationPath, options) {
+  options = defaultOptions(options);
+  if (options.minified === true) {
+    return gulp.src(THIRD_PARTY_SCRIPTS_MINIFIED)
+      .pipe(flatten())
+      .pipe(gulp.dest(destinationPath));
+  } else {
+    return gulp.src(THIRD_PARTY_SCRIPTS)
+      .pipe(flatten())
+      .pipe(gulp.dest(destinationPath));
+  }
 };
 
 var cjsxScripts = function(destinationPath, options) {
@@ -186,13 +201,13 @@ gulp.task('scripts-build', ['clean-scripts-build'], function() {
 });
 
 gulp.task('scripts-dist', function() {
-  return thirdPartyScripts('dist/scripts') &&
+  return thirdPartyScripts('dist/scripts', { minified: true }) &&
     cjsxScripts('dist/scripts', { prefix: DIST_PREFIX_PATH }) &&
     coffeeScripts('dist/scripts', { prefix: DIST_PREFIX_PATH });
 });
 
 gulp.task('scripts-live', function() {
-  return thirdPartyScripts('live/scripts') &&
+  return thirdPartyScripts('live/scripts', { minified: true }) &&
     cjsxScripts('live/scripts') && 
     coffeeScripts('live/scripts');
 });

@@ -11,7 +11,7 @@ pids
 logs
 results
 
-client/css
+client/css/bootstrap.css
 
 server/**/*.js
 server/app.coffee
