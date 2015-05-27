@@ -28,7 +28,6 @@ var jade = require('gulp-jade');
 var watch = require("gulp-watch");
 var nodemon = require("gulp-nodemon");
 var livereload = require('gulp-livereload');
-var tinylr = require('tiny-lr')();
 
 var LIVERELOAD_PORT = 35729;
 var BASEDIR = path.join(__dirname, 'server/views');
@@ -67,7 +66,7 @@ var copy = function(destinationPath, options){
   options = defaultOptions(options);
   return gulp.src(options.copyPaths)
     .pipe(gulp.dest(destinationPath))
-    .pipe(options.watch === true ? livereload(tinylr) : gutil.noop());
+    .pipe(options.watch === true ? livereload() : gutil.noop());
 };
 
 var thirdPartyScripts = function(destinationPath, options) {
@@ -92,7 +91,7 @@ var cjsxScripts = function(destinationPath, options) {
     .pipe(concat(options.watch === true ? 'react-components.js' : 'react-components.min.js'))
     .pipe(options.watch === false ? uglify() : gutil.noop())
     .pipe(gulp.dest(destinationPath))
-    .pipe(options.watch === true ? livereload(tinylr) : gutil.noop());
+    .pipe(options.watch === true ? livereload() : gutil.noop());
 };
 
 var coffeeScripts = function(destinationPath, options) {
@@ -109,7 +108,7 @@ var coffeeScripts = function(destinationPath, options) {
     .pipe(concat(options.watch === true ? 'main.js' : 'main.min.js'))
     .pipe(options.watch === false ? uglify() : gutil.noop())
     .pipe(gulp.dest(destinationPath))
-    .pipe(options.watch === true ? livereload(tinylr) : gutil.noop());
+    .pipe(options.watch === true ? livereload() : gutil.noop());
 };
 
 var lessStyles = function(destinationPath, options) {
@@ -121,7 +120,7 @@ var lessStyles = function(destinationPath, options) {
     .pipe(options.watch === false ? rename({ extname: '.min.css' }) : gutil.noop())
     .pipe(options.watch === false ? minifyCSS({ removeEmpty: true }) : gutil.noop())
     .pipe(gulp.dest(destinationPath))
-    .pipe(options.watch === true ? livereload(tinylr) : gutil.noop());
+    .pipe(options.watch === true ? livereload() : gutil.noop());
 };
 
 var jadeTemplates = function(destinationPath, options) {
@@ -141,7 +140,7 @@ var jadeTemplates = function(destinationPath, options) {
     .pipe(options.prefix.length > 0 ? replace(/\/images\//g, options.prefix + '/images/') : gutil.noop())
     .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + marker))
     .pipe(gulp.dest(destinationPath))
-    .pipe(options.watch === true ? livereload(tinylr) : gutil.noop());
+    .pipe(options.watch === true ? livereload() : gutil.noop());
 };
 
 gulp.task('clean-build', function() {
@@ -252,24 +251,14 @@ gulp.task('serve', ['scripts-server'], function () {
     .on('restart', function () {
       console.log('restarted!')
     })
-  tinylr.listen(LIVERELOAD_PORT, function() {
-    console.log('TinyLR Listening on %s', LIVERELOAD_PORT);
-  });
 });
 
 gulp.task('watch', function() {
-  gulp.watch(['client/**/*.*', '!client/**/*.{coffee,cjsx,less,html,map}'], ['copy-to-build']).on('change', function(file) {
-    tinylr.changed(file.path);
-  });
-  gulp.watch(['client/coffee/**/*.coffee', 'client/coffee/**/*.cjsx'], ['scripts-build']).on('change', function(file) {
-    tinylr.changed(file.path);
-  });
-  gulp.watch('client/less/**/*.less', ['styles-build']).on('change', function(file) {
-    tinylr.changed(file.path);
-  });
-  gulp.watch('server/views/**/*.jade', ['bootstrap-styles']).on('change', function(file) {
-    tinylr.changed(file.path);
-  });
+  livereload.listen();
+  gulp.watch(['client/**/*.*', '!client/**/*.{coffee,cjsx,less,html,map}'], ['copy-to-build']);
+  gulp.watch(['client/coffee/**/*.coffee', 'client/coffee/**/*.cjsx'], ['scripts-build']);
+  gulp.watch('client/less/**/*.less', ['styles-build']);
+  gulp.watch('server/views/**/*.jade', ['bootstrap-styles']);
 });
 
 gulp.task('todo', ['scripts-server', 'templates-build', 'scripts-build'], function(){
