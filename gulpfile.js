@@ -5,7 +5,6 @@ var gulp = require('gulp');
 
 var gutil = require('gulp-util');
 var todo = require('gulp-todo');
-var removeLines = require('gulp-remove-lines');
 var replace = require('gulp-replace');
 var vinylPaths = require('vinyl-paths');
 var del = require('del');
@@ -22,7 +21,6 @@ var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 
 var less = require('gulp-less');
-var uncss = require('gulp-uncss');
 var minifyCSS = require('gulp-minify-css');
 
 var jade = require('gulp-jade');
@@ -36,11 +34,6 @@ var LIVERELOAD_PORT = 35729;
 var BASEDIR = path.join(__dirname, 'server/views');
 var UNCSS_REFERENCE_HTML = [
   'build/index.html'
-];
-var UNCSS_KEEP_STYLES = [
-  /(hover|focus|active)/i,
-  /collapse/i,
-  /dropdown/i
 ];
 var DIST_PREFIX_PATH = '';
 var THIRD_PARTY_SCRIPTS = [
@@ -96,9 +89,6 @@ var cjsxScripts = function(destinationPath, options) {
     .pipe(cjsx({bare: true}).on('error', gutil.log))
     .pipe(options.prefix.length > 0 ? replace(/\/images\//g, options.prefix + '/images/') : gutil.noop())
     .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + (new Date()).getTime()))
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    .pipe(jshint.reporter('fail'))
     .pipe(concat(options.watch === true ? 'react-components.js' : 'react-components.min.js'))
     .pipe(options.watch === false ? uglify() : gutil.noop())
     .pipe(gulp.dest(destinationPath))
@@ -225,11 +215,6 @@ gulp.task('scripts-server', function() {
 
 gulp.task('bootstrap-styles', ['templates-build'], function() {
   return gulp.src('third-party/bootstrap/dist/css/bootstrap.css')
-    .pipe(uncss({
-      html: UNCSS_REFERENCE_HTML,
-      ignore: UNCSS_KEEP_STYLES
-    }))
-    .pipe(removeLines({'filters': [/sourceMappingURL/]}))
     .pipe(gulp.dest('client/css'))
 });
 
