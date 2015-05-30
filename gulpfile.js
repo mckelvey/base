@@ -31,9 +31,6 @@ var livereload = require('gulp-livereload');
 
 var LIVERELOAD_PORT = 35729;
 var BASEDIR = path.join(__dirname, 'server/views');
-var UNCSS_REFERENCE_HTML = [
-  'build/index.html'
-];
 var DIST_PREFIX_PATH = '';
 var THIRD_PARTY_SCRIPTS = [
   'third-party/jquery/dist/jquery.js',
