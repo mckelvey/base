@@ -42,6 +42,6 @@ express.get pattern,
       if err?
         handlePage req.url, res
       else
-        res.sendfile staticHTML
+        res.sendFile staticHTML
 
 server.listen(env.server.port)
