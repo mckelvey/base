@@ -1,31 +1,28 @@
 {
   "name": "base",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "David W. McKelvey",
   "dependencies": {
     "gulp": "~3.8.11",
     "gulp-util": "~3.0.4",
-    "gulp-todo": "~3.1.0",
     "gulp-remove-lines": "~0.1.0",
     "gulp-replace": "~0.5.3",
     "gulp-flatten": "~0.0.4",
     "gulp-coffee": "~2.3.1",
     "gulp-coffeelint": "~0.5.0",
-    "gulp-cjsx": "~3.0.0",
     "gulp-jshint": "~1.11.0",
     "gulp-concat": "~2.5.2",
     "gulp-rename": "~1.2.2",
     "gulp-uglify": "~1.2.0",
-    "gulp-less": "~3.0.3",
+    "gulp-sass": "~2.0.4",
     "gulp-minify-css": "~1.1.1",
+    "gulp-imagemin": "~2.3.0",
     "gulp-jade": "~1.0.1",
-    "gulp-livereload": "~3.8.0",
     "gulp-nodemon": "~2.0.3",
+    "browser-sync": "~2.8.2",
     "gulp-watch": "~4.2.4",
-    "gulp-bower": "~0.0.10",
     "vinyl-paths": "~1.0.0",
     "del": "~1.2.0",
-    "minimize": "~1.4.1",
     "express": "~4.12.4",
     "morgan": "~1.5.3",
     "body-parser": "~1.12.4",
@@ -50,5 +47,19 @@
     "url": "https://github.com/mckelvey/base/issues"
   },
   "main": "gulpfile.js",
-  "license": "MIT"
+  "license": "MIT",
+  "templatePath": "server/views",
+  "development": {
+    "port": 3000,
+    "proxyPort": 4000,
+    "staticPath": "build",
+    "scripts": []
+  },
+  "production": {
+    "port": 8000,
+    "domain": "your.domain.com",
+    "distPrefix": "",
+    "staticPath": "dist",
+    "scripts": []
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "homepage": "https://github.com/mckelvey/base",
   "authors": [
     "David McKelvey <david@mckelveycreative.com>"
@@ -12,9 +12,5 @@
     "bower_components"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.4",
-    "jquery": "~1.11.3",
-    "lodash": "~3.9.3",
-    "react": "~0.13.3"
   }
 }
