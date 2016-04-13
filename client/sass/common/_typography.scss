@@ -1,0 +1,25 @@
+
+// Typography
+// ---------------------
+
+@mixin body-font() {
+  font-family: Georgia, sans-serif;
+  font-weight: 400;
+  line-height: 1.44;
+  letter-spacing: 0;
+}
+
+@mixin header-font() {
+  @include body-font();
+  text-transform: uppercase;
+  letter-spacing: 0.21em;
+  font-size: 1.08em;
+}
+
+@mixin script-font() {
+  font-family: 'Cardo', serif;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.44;
+  letter-spacing: 0.03em;
+}
