@@ -33,7 +33,7 @@ var BASEDIR = path.join(__dirname, packageJSON.templatePath);
 
 var defaultOptions = function(options) {
   if (typeof options === 'undefined') { options = {}; }
-  if (typeof options.copyPaths === 'undefined') { options.copyPaths = 'client/!(sass|coffee|images)/**/*.*'; }
+  if (typeof options.copyPaths === 'undefined') { options.copyPaths = ['client/!(sass|coffee|images)/**/*.*', 'client/*.!(html)']; }
   if (typeof options.prefix != 'string') { options.prefix = ''; }
   if (typeof options.minified != 'boolean') { options.minified = false; }
   if (typeof options.watch != 'boolean') { options.watch = false; }
