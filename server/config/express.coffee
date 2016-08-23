@@ -18,7 +18,7 @@ nodeEnv = process.env.NODE_ENV || 'development'
 app = express()
 app.set 'host', packageJSON.production.domain
 app.set 'views', "#{root}#{packageJSON.templatePath}"
-app.set 'view engine', 'jade'
+app.set 'view engine', 'pug'
 app.set 'view options', { layout: false }
 app.use (req, res, next) ->
   if req.url.split('/').pop().match(/\.[a-z\d]+$/ig) is null
