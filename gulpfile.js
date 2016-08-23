@@ -17,11 +17,11 @@ var jshint          = require('gulp-jshint');
 var uglify          = require('gulp-uglify');
 
 var sass            = require('gulp-sass');
-var minifyCSS       = require('gulp-minify-css');
+var minifyCSS       = require('gulp-clean-css');
 
 var imagemin        = require('gulp-imagemin');
 
-var jade            = require('gulp-jade');
+var pug             = require('gulp-pug');
 
 var watch           = require("gulp-watch");
 var nodemon         = require("gulp-nodemon");
@@ -112,7 +112,7 @@ var templates = function(destinationPath, options) {
         prefixPath: options.prefix
       };
   return gulp.src('server/views/pages/**/*.jade')
-    .pipe(jade({
+    .pipe(pug({
       basedir: BASEDIR,
       locals: locals
     })).on('error', function(err){ console.log(err.message); })
