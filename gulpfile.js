@@ -114,7 +114,7 @@ var templates = function(destinationPath, options) {
   return gulp.src('server/views/pages/**/*.jade')
     .pipe(pug({
       basedir: BASEDIR,
-      locals: locals
+      data: locals
     })).on('error', function(err){ console.log(err.message); })
     .pipe(options.prefix.length > 0 ? replace(/\/images\//g, options.prefix + '/images/') : gutil.noop())
     .pipe(replace(/\.(jpg|jpeg|gif|png|svg)$/g, '.$1?' + marker))

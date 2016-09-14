@@ -13,12 +13,12 @@ html(lang="en")
     meta(name='description', content=description)
     meta(name='keywords', content=keywords)
     meta(name='author', content='David W. McKelvey')
-    - if (locals.env == 'dev') {
+    - if (env == 'dev') {
       link(rel='stylesheet', type='text/css', href='/styles/main.css?' + marker)
       link(rel='stylesheet', type='text/css', href='/styles/print.css?' + marker, media="print")
     - } else {
-      link(rel='stylesheet', type='text/css', href='#{locals.prefixPath}/styles/main.min.css?' + marker)
-      link(rel='stylesheet', type='text/css', href='#{locals.prefixPath}/styles/print.min.css?' + marker, media="print")
+      link(rel='stylesheet', type='text/css', href=prefixPath + '/styles/main.min.css?' + marker)
+      link(rel='stylesheet', type='text/css', href=prefixPath + '/styles/print.min.css?' + marker, media="print")
     - }
     script.
       (function(d) {
@@ -66,9 +66,9 @@ html(lang="en")
               a.email.p-email(href="mailto:hello@domain.tld") hello@domain.tld
             li.tel
               a.tel.p-tel(href="tel:###-###-####") ###-###-####
-    - if (locals.env == 'dev') {
+    - if (env == 'dev') {
       script(src='/scripts/main.js?' + marker)
     - } else {
-      script(src='#{locals.prefixPath}/scripts/main.min.js?' + marker)
+      script(src=prefixPath + '/scripts/main.min.js?' + marker)
     - }
     block scripts
