@@ -250,7 +250,6 @@ gulp.task('server', ['scripts-server'], function (callback) {
 });
 
 gulp.task('watch', [
-  'clean-build',
   'styles-build',
   'scripts-build',
   'images-build',
